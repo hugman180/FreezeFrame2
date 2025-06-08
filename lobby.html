@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Freeze Frame 🎥</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body>
+    <div class="lobby-container">
+        <h1 class="title">🎬 Freeze Frame</h1>
+
+        <form action="/create" method="POST" class="form-section">
+            <input type="text" name="pseudo" placeholder="Votre pseudo" required class="input">
+            <button type="submit" class="button">Créer une salle</button>
+        </form>
+
+        <form action="/join" method="POST" class="form-section">
+            <input type="text" name="pseudo" placeholder="Votre pseudo" required class="input">
+            <input type="text" name="code" placeholder="Code de la salle" required class="input">
+            <button type="submit" class="button">Rejoindre une salle</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

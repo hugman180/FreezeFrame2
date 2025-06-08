@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Freeze Frame</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, orientation=landscape">
+
+</head>
+<body>
+<div id="rules-box">
+    <h3>📜 Règles du jeu</h3>
+    <ul>
+        <li>🎥 Une vidéo est jouée automatiquement</li>
+        <li>🧠 Une question s'affiche à la fin</li>
+        <li>👀 Retiens le plus d'elemnt possible</li>
+        <li>⏱ Tu as 15 secondes pour répondre</li>
+        <li>✅ Une seule réponse possible</li>
+        <li>👑 Seul le chef peut lancer la prochaine question</li>
+        <li>🔁 5 questions par partie</li>
+    </ul>
+</div>
+
+<div id="start-screen">
+    <h1>Freeze Frame</h1>
+    <button id="start-game-btn" style="display:none;">🚀 Lancer la partie</button>
+    <div id="room-code-display">
+        🔑 Code salle : <strong>{{ room_code }}</strong>
+    </div>
+
+    <div id="player-list-wait">
+        <h3 id="players-title">👥 Joueurs dans la salle</h3>
+        <div id="player-names" class="name-grid"></div>
+    </div>
+
+
+    
+</div>
+
+
+<div id="score-container">Score : <span id="score">0</span></div>
+
+
+
+<div id="main-container">
+    <!-- Podium des 3 premiers joueurs -->
+    <div id="top-three-container">
+        <div id="top-three"></div>
+    </div>
+
+    <video id="video" controls autoplay>
+        <source id="videoSource" src="" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo.
+    </video>
+
+    <div id="question">
+        <p id="questionText"></p>
+        <div id="options"></div>
+        <div id="response-counter">Réponses : 0 / 0</div>
+        <div id="countdown">
+            Temps restant : <span id="timer">--</span> sec
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+        </div>
+        <button id="next-btn">👉 Question suivante</button>
+    </div>
+</div>
+
+<div id="results" style="display:none;">
+    <h2>🎉 Résultats de la partie</h2>
+    <table id="results-table"></table>
+    <button onclick="location.href='/'">🔁 Rejouer</button>
+</div>
+
+<div id="chat-box">
+    <div id="chat-header">
+        <span>💬</span>
+        <button id="close-chat">❌</button>
+    </div>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="Message...">
+        <button type="submit">Envoyer</button>
+    </form>
+</div>
+
+<button id="open-chat" style="display:none;">💬</button>
+
+<audio id="click-sound" src="{{ url_for('static', filename='sounds/click.mp3') }}"></audio>
+<audio id="win-sound" src="{{ url_for('static', filename='sounds/win.mp3') }}"></audio>
+<audio id="fail-sound" src="{{ url_for('static', filename='sounds/fail.mp3') }}"></audio>
+<audio id="waiting-music" src="{{ url_for('static', filename='sounds/waiting.mp3') }}" loop autoplay></audio>
+
+<script>
+    const isHost = {{ session["is_host"]|tojson }};
+    const roomCode = "{{ room_code }}";
+    const username = "{{ session['username'] }}";
+</script>
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
